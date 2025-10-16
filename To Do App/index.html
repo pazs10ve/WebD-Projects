@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Task Manager</h1>
+    </header>
+
+    <main>
+        <section class="task-input-section">
+            <form id="addTaskForm">
+                <input type="text" id="taskInput" placeholder="Add task..." required>
+                <input type="date" id="taskDate" placeholder="Add task..." required>
+                <button type="submit">Add</button>
+            </form>
+        </section>
+
+        <section id="tasks-container">
+
+            <div class="date-group">
+                <h2 class="date-header">October 17, 2025</h2>
+                <ul class="task-list">
+                    <li class="task-item">
+                        <input type="checkbox" class="complete-checkbox">
+                        <span class="task-text">Buy groceries</span>
+                        <div class="task-controls">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </li>
+                    <li class="task-item completed">
+                        <input type="checkbox" class="complete-checkbox" checked>
+                        <span class="task-text">Finish the project report</span>
+                        <div class="task-controls">
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </section>
+    </main>
+
+
+    <footer>
+        <p>&copy 2025 To-Do App</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
+
