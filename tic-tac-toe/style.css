@@ -1,0 +1,107 @@
+/* --- General Page Layout --- */
+body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #222;
+}
+
+/* --- Header --- */
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    text-align: center;
+    margin: 0;
+}
+
+/* --- Game Container --- */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* --- Game Board --- */
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    background-color: #1e3a8a;
+    padding: 5px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Cells --- */
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.8rem;
+    font-weight: bold;
+    color: #1e293b;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 6px;
+    transition: background-color 0.25s, transform 0.1s;
+}
+
+.cell:hover {
+    background-color: #e2e8f0;
+}
+
+.cell:active {
+    transform: scale(0.97);
+}
+
+/* --- Status Text --- */
+#status-text {
+    margin-top: 20px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+/* --- Restart Button --- */
+#restart-button {
+    margin-top: 20px;
+    padding: 10px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #2563eb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.25s, transform 0.1s;
+}
+
+#restart-button:hover {
+    background-color: #1d4ed8;
+}
+
+#restart-button:active {
+    transform: scale(0.98);
+}
+
+/* --- Footer --- */
+footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+}
