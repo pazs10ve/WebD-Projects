@@ -1,0 +1,693 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* --- 3. Global Variables (Custom Properties) --- */
+:root {
+    /* Colors */
+    --bg-color-gradient: linear-gradient(180deg, #1a1a1a 0%, #111111 100%);    /* Very dark, almost black background */
+    --surface-color: #2c2c2c;  /* A slightly lighter dark for "cards" or sections */
+    --text-color: #f5f5f5;      /* A soft, off-white for body text */
+    --accent-color: #e74c3c;     /* A strong, clear red for buttons and links */
+
+    /* Fonts */
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Lato', sans-serif;
+    
+}
+
+/* --- 4. Basic Body Styles --- */
+body {
+    font-family: var(--font-body);       /* Use our body font */
+    background-color: var(--bg-color);   /* Use our background color */
+    color: var(--text-color);          /* Use our text color */
+    line-height: 1.6;     
+    background-image: var(--bg-color-gradient);             /* Adds nice spacing between lines of text */
+}
+
+/* --- 5. Typography & Links --- */
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    line-height: 1.3;
+    margin-bottom: 1rem; /* 1rem is about 16px by default */
+}
+
+/* We'll make section headings a bit bigger */
+h2 {
+    font-size: 2rem; /* 32px */
+    text-align: center;
+    margin-bottom: 2rem; /* Give sections more space */
+}
+
+p {
+    margin-bottom: 1rem; /* Space between paragraphs */
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none; /* Remove default underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Add underline back on hover for usability */
+}
+
+/* Utility Class for centering text */
+.text-center {
+    text-align: center;
+}
+
+/* --- 6. Header & Navigation (Mobile-First) --- */
+header {
+    display: flex;
+    position: sticky;
+    top: 0;           /* Stick it to the top of the viewport */
+    z-index: 1000;
+    justify-content: space-between; /* Puts logo on left, nav stuff on right */
+    align-items: center;            /* Vertically centers items */
+    padding: 1rem 1.5rem;           /* 1rem top/bottom, 1.5rem left/right */
+    background-color: var(--surface-color); /* A bit lighter than the page bg */
+    border-bottom: 2px solid var(--accent-color);
+    background-color: rgba(44, 44, 44, 0.75); /* Semi-transparent */
+    backdrop-filter: blur(10px);
+}
+
+.logo-link {
+    font-family: var(--font-heading);
+    font-size: 1.5rem; /* 24px */
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.logo-link:hover {
+    text-decoration: none;
+    color: var(--accent-color);
+}
+
+/* Style the navigation list (MOBILE-FIRST) */
+nav ul {
+    list-style: none; /* Remove default bullet points */
+    
+    /* --- This is the key for mobile --- */
+    display: none; /* Hide the menu by default on mobile */
+    /* ---------------------------------- */
+
+    /* We'll make it a vertical list for mobile */
+    position: absolute;
+    top: 100%; /* Start right below the header */
+    left: 0;
+    width: 100%;
+    background-color: var(--surface-color);
+}
+
+/* This class will be added by JavaScript to show the menu */
+nav ul.active {
+    display: block;
+}
+
+/* Style the links */
+nav li {
+    text-align: center;
+    border-bottom: 1px solid var(--bg-color); /* Separators */
+}
+
+nav li:last-child {
+    border-bottom: none; /* No border on the last item */
+}
+
+nav a {
+    display: block; /* Make the whole area clickable */
+    padding: 1rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+nav a:hover {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+/* Hide the hamburger button by default (we'll show it next) */
+.nav-toggle {
+    display: none;
+}
+
+/* --- 7. Hamburger Menu Styles (Mobile-Only) --- */
+
+/* This is a media query. These styles ONLY apply 
+   if the screen width is 767px or less. */
+@media (max-width: 767px) {
+    
+    /* Show the hamburger button */
+    .nav-toggle {
+        display: block;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    
+    /* The hamburger "lines" */
+    .hamburger {
+        display: block;
+        position: relative;
+        width: 25px;
+        height: 3px;
+        background: var(--text-color);
+        transition: all 0.2s ease-in-out;
+    }
+
+    /* The '::before' and '::after' create the other two lines */
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: var(--text-color);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .hamburger::before {
+        top: -8px; /* Line above */
+    }
+
+    .hamburger::after {
+        bottom: -8px; /* Line below */
+    }
+
+    /* We will use JS to add an 'is-active' class 
+       to the button to animate it to an 'X' */
+    .nav-toggle.is-active .hamburger {
+        background: transparent; /* Middle line disappears */
+    }
+    .nav-toggle.is-active .hamburger::before {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .nav-toggle.is-active .hamburger::after {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
+}
+
+/* --- 8. Desktop Navigation Styles --- */
+
+/* This media query applies styles ONLY 
+   when the screen is 768px WIDE or MORE */
+@media (min-width: 768px) {
+    
+    /* 1. Hide the hamburger button on desktop */
+    .nav-toggle {
+        display: none; 
+    }
+
+    /* 2. Show the nav list */
+    nav ul {
+        display: flex; /* This is the key! Makes it horizontal. */
+        
+        /* 3. Undo the mobile styles */
+        position: static; /* Un-do 'absolute' */
+        width: auto;      /* Un-do '100%' */
+        background-color: transparent; /* Un-do the background */
+    }
+
+    /* 4. Undo the mobile list item styles */
+    nav li {
+        border-bottom: none; /* Remove the separators */
+    }
+
+    /* 5. Style the links for a desktop bar */
+    nav a {
+        padding: 0; /* Remove the large mobile padding */
+        margin-left: 2rem; /* Add space BETWEEN the links */
+        font-size: 1rem;
+    }
+    
+    nav a:hover {
+        background-color: transparent; /* No background color on hover */
+        color: var(--accent-color);    /* Just change the text color */
+        text-decoration: underline;    /* Add underline on hover */
+    }
+}
+
+/* --- 9. Reusable Button Styles --- */
+.btn {
+    display: inline-block; /* Allows padding and margins */
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--accent-color);
+    border-radius: 5px;
+    
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: var(--accent-color);
+    color: var(--text-color);
+}
+
+/* A "primary" button style with a filled background */
+.btn-primary {
+    background: var(--accent-color);
+    color: var(--text-color);
+}
+
+.btn-primary:hover {
+    background: transparent;
+    color: var(--accent-color);
+}
+
+
+/* --- 10. Hero Section --- */
+.hero {
+    /* Sizing */
+    min-height: 85vh;
+    padding: 2rem;
+
+    /* Background Image with Dark Overlay
+       
+       *** THIS IS THE MOST IMPORTANT PART ***
+       Notice the comma separating the linear-gradient from the url.
+       If you miss this comma, the whole line breaks and you just get black.
+    */
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+        url('images/hero-bg.jpg');
+    
+    background-size: cover;
+    background-position: center;
+
+    /* Flexbox for Centering Content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 0.5rem;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    margin-bottom: 2rem;
+}
+
+/* Let's make the text even bigger on desktop */
+@media (min-width: 768px) {
+    .hero h2 {
+        font-size: 4.5rem;
+    }
+}
+
+/* --- 12. About Us Section --- */
+
+.about-image img {
+    width: 100%; /* Make the image responsive */
+    height: auto;
+    border-radius: 5px; /* Give it slightly rounded corners */
+    margin-bottom: 1.5rem;
+}
+
+/* --- Desktop Layout for About Section --- */
+@media (min-width: 768px) {
+    .about-container {
+        display: flex; /* Activate Flexbox */
+        align-items: center; /* Vertically center items */
+        gap: 2rem; /* Add a 2rem gap between image and text */
+    }
+
+    .about-image,
+    .about-text {
+        flex: 1; /* This makes each one take up 50% of the space */
+    }
+    
+    .about-image img {
+        margin-bottom: 0; /* No margin needed on desktop */
+    }
+}
+
+
+/* --- 13. Contact Section --- */
+#contact {
+    text-align: center; /* Center all the text */
+}
+
+#contact p {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* --- 14. Footer --- */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--surface-color);
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+/* --- 15. Menu Section --- */
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.menu-tabs button {
+    /* ... your existing button styles ... */
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: transparent;
+    border: 2px solid var(--surface-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menu-tabs button.active,
+.menu-tabs button:hover {
+    background: var(--accent-color);
+    color: var(--text-color);
+    border-color: var(--accent-color);
+}
+
+/* By default, hide all menu content */
+.menu-tab-content {
+    display: none; 
+}
+
+/* This class will be added by JS to show the correct content */
+.menu-tab-content.active {
+    display: grid; /* Use Grid for the layout! */
+    gap: 2rem;     /* A bit more gap */
+}
+
+/* --- NEW MENU ITEM STYLES --- */
+.menu-item {
+    display: flex; /* This is the key: image and text side-by-side */
+    align-items: center;
+    background: var(--surface-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow: hidden; /* Ensures image corners are rounded */
+    transition: transform 0.3s ease;
+}
+
+.menu-item:hover {
+    transform: scale(1.03); /* A subtle hover effect */
+}
+
+.menu-item-image {
+    width: 120px;   /* Fixed width for the image */
+    height: 120px;  /* Fixed height */
+    object-fit: cover; /* This is CRITICAL: scales image to fit, cropping as needed */
+    flex-shrink: 0; /* Prevents image from shrinking */
+}
+
+.menu-item-content {
+    flex-grow: 1; /* Takes up the remaining space */
+    padding: 1.5rem;
+}
+
+.menu-item-header {
+    display: flex;
+    justify-content: space-between; /* Puts name and price on opposite ends */
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.menu-item-header h3 {
+    margin: 0;
+    color: var(--accent-color);
+    font-size: 1.25rem;
+}
+
+.menu-item-header .price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0; /* Prevents price from wrapping */
+    margin-left: 1rem;
+}
+
+.menu-item-content p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* --- Desktop Layout for Menu Grid --- */
+@media (min-width: 768px) {
+    .menu-tab-content.active {
+        /* On desktop, show 2 columns */
+        grid-template-columns: 1fr 1fr; 
+    }
+}
+
+/* On very small phones, stack the image on top */
+@media (max-width: 480px) {
+    .menu-item {
+        flex-direction: column; /* Stack image on top of text */
+        align-items: stretch; /* Stretch to fill width */
+    }
+    
+    .menu-item-image {
+        width: 100%; /* Full width */
+        height: 180px; /* Taller height */
+    }
+}
+
+/* --- NEW: Max-width for main content to prevent stretching --- */
+.wrapper {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;    /* Centers the wrapper on the page */
+    padding: 0 1.5rem; /* Horizontal padding, so content doesn't hit screen edges */
+}
+
+/* We need to override the padding for the hero section 
+   so its image can stretch edge-to-edge. */
+.hero {
+    /* Existing hero styles... */
+    padding: 2rem 0; /* Remove side padding on hero */
+}
+
+/* Also for the footer, usually want it full width */
+footer {
+    /* Existing footer styles... */
+    padding: 2rem 1.5rem; /* Make sure footer has side padding for text */
+}
+
+/* We also need to remove side padding from .content-section
+   because the .wrapper now handles it */
+.content-section {
+    padding: 4rem 0; /* Remove side padding from content sections */
+}
+
+/* --- Desktop Layout for Menu Grid --- */
+@media (min-width: 768px) {
+    .menu-tab-content.active {
+        /* On desktop, show 2 columns */
+        grid-template-columns: 1fr 1fr; 
+    }
+}
+
+
+@media (min-width: 768px) {
+    .about-container {
+        display: flex;
+        align-items: flex-start; /* <<< CHANGE: Align items to the top */
+        gap: 3rem;              /* <<< Slightly more gap for breathing room */
+    }
+
+    .about-image {
+        flex: 2; /* <<< NEW: Make image take 2 parts of space (e.g., 40%) */
+        min-width: 0; /* Fix for flex item overflow issues sometimes */
+    }
+    
+    .about-text {
+        flex: 3; /* <<< NEW: Make text take 3 parts of space (e.g., 60%) */
+        padding-top: 0.5rem; /* <<< NEW: Slight top alignment if needed */
+    }
+    
+    .about-image img {
+        margin-bottom: 0;
+    }
+}
+
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+    object-fit: cover; /* <<< NEW: Ensures image covers its container cleanly */
+    max-height: 400px; /* <<< NEW: Prevents very tall images from dominating */
+}
+
+
+/* --- 16. Scroll Animations --- */
+.hidden-section {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateY(2rem);
+    transition: all 1s ease-out;
+}
+
+.show-section {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+}
+
+/* --- 18. Testimonial Section (Carousel) --- */
+
+.testimonial-carousel {
+    position: relative; /* For positioning the buttons */
+    max-width: 800px; /* Constrain the width */
+    margin: 0 auto;   /* Center it */
+    overflow: hidden; /* This is the key: hides the other slides */
+    border-radius: 8px;
+    background: var(--surface-color);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial-track {
+    display: flex; /* Lines up slides horizontally */
+    
+    /* This transition is what makes the slide smooth */
+    transition: transform 0.5s ease-in-out; 
+}
+
+.testimonial-slide {
+    flex: 0 0 100%; /* Each slide is 100% of the carousel's width */
+    box-sizing: border-box; /* Include padding in the 100% width */
+    padding: 2rem 4rem; /* Give the card inside some space (less L/R on mobile) */
+}
+
+/* We just need to ensure the card fills its slide container */
+.testimonial-card {
+    background: transparent; /* Card is now just content, not the container */
+    box-shadow: none;        /* Remove shadow from the card */
+    padding: 0;
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 250px; /* Give a consistent height */
+}
+
+.testimonial-card .rating {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.testimonial-card .quote {
+    font-style: italic;
+    font-size: 1.1rem;
+    flex-grow: 1; 
+    margin-bottom: 1rem;
+}
+
+.testimonial-card .author {
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: right;
+    color: #ccc;
+    margin: 0;
+}
+
+/* Style for the Prev/Next Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* Perfectly centers vertically */
+    z-index: 10;
+    
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Make them circles */
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: var(--accent-color);
+}
+
+.prev-btn {
+    left: 1rem;
+}
+
+.next-btn {
+    right: 1rem;
+}
+
+/* Adjust padding on mobile */
+@media (max-width: 767px) {
+    .testimonial-slide {
+        padding: 1.5rem 3.5rem; /* Less padding so text fits */
+    }
+}
+
+
+/* --- 17. Icon Styling --- */
+
+/* Contact Section Icons */
+.contact-info .fa-solid {
+    color: var(--accent-color); /* Make them red */
+    margin-right: 0.75rem;    /* Add space between icon and text */
+    font-size: 1.1rem;
+}
+
+/* Footer Social Icons */
+.social-icons {
+    margin-bottom: 1.5rem;
+}
+
+.social-icons a {
+    color: var(--text-color); /* Make them our off-white color */
+    font-size: 1.75rem;      /* Make them nice and big */
+    margin: 0 1rem;          /* Space them out */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: var(--accent-color); /* On hover, turn them red */
+}
+
+
